@@ -36,4 +36,10 @@ class Building
     @rented_units.max_by { |unit| unit.monthly_rent }.renter
   end
 
+  def units_by_number_of_bedrooms
+    hash = units.group_by { |unit| unit.bedrooms }
+    hash.transform_values! do |v|
+      v[0] = v[0].number
+    end
+  end
 end
