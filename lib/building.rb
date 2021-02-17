@@ -1,10 +1,12 @@
 class Building
   attr_reader :units,
-              :renters
+              :renters,
+              :rented_units
 
   def initialize
     @units = []
     @renters = []
+    @rented_units = []
   end
 
   def add_unit(unit)
@@ -21,13 +23,17 @@ class Building
     total_rent / units.size.to_f
   end
 
-  def rented_units
-    total_units = []
+  def total_rented_units
+    @rented_units = []
     renters.each do |renter|
       units.each do |unit|
-        total_units << unit if unit.renter != nil
+        @rented_units << unit if unit.renter != nil && unit.renter.name == renter
       end
     end
-    total_units
   end
+
+  def renter_with_highest_rent
+    @rented_units.max_by { |unit| unit.monthly_rent }.renter
+  end
+
 end

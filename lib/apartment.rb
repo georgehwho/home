@@ -18,6 +18,7 @@ class Apartment
   def add_renter(renter)
     @renter = renter
     @building.renters << renter.name if building != nil
+    @building.total_rented_units
   end
 
   def belongs_to(building)
