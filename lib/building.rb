@@ -20,4 +20,14 @@ class Building
     total_rent = units.reduce(0) { |memo, apartment| memo += apartment.monthly_rent }
     total_rent / units.size.to_f
   end
+
+  def rented_units
+    total_units = []
+    renters.each do |renter|
+      units.each do |unit|
+        total_units << unit if unit.renter != nil
+      end
+    end
+    total_units
+  end
 end
