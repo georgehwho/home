@@ -2,11 +2,13 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/apartment'
 require './lib/renter'
+require './lib/building'
 
 class ApartmentTest < Minitest::Test
   def setup
     @renter1 = Renter.new('Jessie')
     @unit1 = Apartment.new({number: "A1", monthly_rent: 1200, bathrooms: 1, bedrooms: 1})
+    @building = Building.new
   end
 
   def test_it_exists
@@ -25,4 +27,11 @@ class ApartmentTest < Minitest::Test
     @unit1.add_renter(@renter1)
     assert_equal @renter1, @unit1.renter
   end
+
+  def test_it_knows_when_it_belongs_to_a_building
+    @building.add_unit(@unit1)
+    assert_equal @building, @unit1.belongs_to(@building)
+  end
+
+  
 end
