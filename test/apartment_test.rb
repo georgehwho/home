@@ -21,6 +21,7 @@ class ApartmentTest < Minitest::Test
     assert_equal 1, @unit1.bathrooms
     assert_equal 1, @unit1.bedrooms
     assert_nil @unit1.renter
+    assert_nil @unit1.building
   end
 
   def test_it_can_add_a_renter
@@ -29,9 +30,14 @@ class ApartmentTest < Minitest::Test
   end
 
   def test_it_knows_when_it_belongs_to_a_building
-    @building.add_unit(@unit1)
-    assert_equal @building, @unit1.belongs_to(@building)
+    # skip
+    @unit1.belongs_to(@building)
+    assert_equal @building, @unit1.building
   end
 
-  
+  def test_it_adds_renter_name_to_building_if_it_belongs_to_a_building
+    @unit1.belongs_to(@building)
+    @unit1.add_renter(@renter1)
+    assert_equal ['Jessie'], @unit1.building.renters
+  end
 end

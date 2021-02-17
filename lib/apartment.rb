@@ -1,12 +1,10 @@
-require './lib/building'
-
 class Apartment
   attr_reader :number,
               :monthly_rent,
               :bathrooms,
               :bedrooms,
               :renter,
-              :belongs_to
+              :building
 
   def initialize(hash)
     @number = hash[:number]
@@ -14,13 +12,15 @@ class Apartment
     @bathrooms = hash[:bathrooms]
     @bedrooms = hash[:bedrooms]
     @renter = nil
+    @building = nil
   end
 
   def add_renter(renter)
     @renter = renter
+    @building.renters << renter.name if building != nil
   end
 
   def belongs_to(building)
-    @belongs_to = building
+    @building = building
   end
 end
