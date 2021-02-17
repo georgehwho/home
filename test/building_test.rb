@@ -14,7 +14,8 @@ class BuildingTest < Minitest::Test
     @renter1 = Renter.new("Aurora")
     @renter2 = Renter.new("Tim")
     @renter3 = Renter.new("Spencer")
-    @renter4 = Renter.nwe('Jessie')
+    @renter4 = Renter.new('Jessie')
+    @renter5 = Renter.new("Max")
   end
 
   def test_it_exists
@@ -66,8 +67,35 @@ class BuildingTest < Minitest::Test
     assert_equal [], @building.rented_units
 
     @unit2.add_renter(@renter3)
-    assert_equal ['Spencer'], @building.renters
-
     assert_equal [@unit2], @building.rented_units
+    @unit1.add_renter(@renter4)
+    assert_equal [@unit2, @unit1], @building.rented_units
+  end
+
+  def test_it_can_find_the_renter_with_the_highest_rent
+    @building.add_unit(@unit1)
+    @building.add_unit(@unit2)
+    @building.add_unit(@unit3)
+    @unit2.add_renter(@renter3)
+    assert_equal @renter3, @building.renter_with_highest_rent
+    @unit1.add_renter(@renter4)
+    assert_equal @renter4, @building.renter_with_highest_rent
+    @unit3.add_renter(@renter5)
+    assert_equal @renter4, @building.renter_with_highest_rent
+  end
+
+  def test_it_can_group_units_by_bedrooms
+    @building.add_unit(@unit1)
+    @building.add_unit(@unit2)
+    @building.add_unit(@unit3)
+    @building.add_unit(@unit4)
+
+    answer = {
+                3 => ["D4" ],
+                2 => ["B2", "C3"],
+                1 => ["A1"]
+              }
+
+    assert_equal answer, @building.units_by_number_of_bedrooms
   end
 end
