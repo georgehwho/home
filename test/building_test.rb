@@ -25,13 +25,26 @@ class BuildingTest < Minitest::Test
   def test_it_can_add_units
     @building.add_unit(@unit1)
     @building.add_unit(@unit2)
+
     assert_equal [@unit1, @unit2], @building.units
   end
 
+  def test_it_can_add_renter_names
+    @building.add_renter(@renter1)
+
+    assert_equal ['Aurora'], @building.renters
+  end
+
   def test_it_can_add_renters
+    # skip
     @building.add_unit(@unit1)
     @building.add_unit(@unit2)
     @unit1.add_renter(@renter1)
+
     assert_equal ['Aurora'], @building.renters
+
+    @unit2.add_renter(@renter2)
+    assert_equal ["Aurora", "Tim"], @building.renters
   end
+
 end
