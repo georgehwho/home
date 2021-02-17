@@ -47,4 +47,10 @@ class BuildingTest < Minitest::Test
     assert_equal ["Aurora", "Tim"], @building.renters
   end
 
+  def test_it_can_find_the_average_rent
+    @building.add_unit(@unit1)
+    @building.add_unit(@unit2)
+
+    assert_equal 1099.5, @building.average_rent
+  end
 end
