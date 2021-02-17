@@ -20,4 +20,9 @@ class ApartmentTest < Minitest::Test
     assert_equal 1, @unit1.bedrooms
     assert_equal nil, @unit1.renter
   end
+
+  def test_it_can_add_a_renter
+    @unit1.add_renter(@renter1)
+    assert_equal @renter1.name, @unit1.renter.name
+  end
 end
